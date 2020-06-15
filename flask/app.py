@@ -21,6 +21,7 @@ class Country(Document):
     name = StringField()
     data = DictField()    
 
+# read countries data
 @app.route('/readcountries')
 def read_country():
     for file in os.listdir(app.config['FILES_FOLDER']):
@@ -53,6 +54,23 @@ def read_country():
                 country.save()
     return redirect(url_for("index"))
 
+
+
+@app.route('/')
+def index():
+    return render_template("base.html", title = "Home", page="home")
+
+@app.route('/inspiration')
+def inspiration():
+    return render_template("inspiration.html", title = "Inspirations", page="inspiration")
+
+@app.route("/data")    
+def country_data():
+    countries_list = db.country.distinct('name')
+    countries_list.sort()
+    return render_template("data.html", title = "Visualisation", page = "data", countries_data = countries_list) 
+
+# API's for get all countries andd specific country
 @app.route('/countries', methods=['GET'])
 @app.route('/countries/<country_name>', methods=['GET'])
 def get_country(country_name=None):
@@ -68,19 +86,27 @@ def get_country(country_name=None):
         except:
             return "Country not found"
 
-@app.route('/')
-def index():
-    return render_template("base.html", title = "Home", page="home")
+# API for edit country
+@app.route('/country/edit', methods=['POST'])
+def edit_country():
+    data = request.get_json()['data']
+    country_name = data['country']
+    year = data['year']
+    con = Country.objects.get(name = country_name)
+    con['data']['industry_percent_of_gdp'][year] = data['industry']
+    con['data']['agriculture_percent_of_gdp'][year] = data['agriculture']
+    con['data']['services_percent_of_gdp'][year] = data['services']
+    con.save()
+    return jsonify({"status":"success"})
 
-@app.route('/inspiration')
-def inspiration():
-    return render_template("inspiration.html", title = "Inspirations", page="inspiration")
-
-@app.route("/data")    
-def country_data():
-    countries_list = db.country.distinct('name')
-    countries_list.sort()
-    return render_template("data.html", title = "Visualisation", page = "data", countries_data = countries_list) 
+# API for delete country
+@app.route('/country/delete', methods=['DELETE'])
+def delete_country():
+    print("Called from Node")
+    data = request.get_json()['data']
+    country_name = data['country']
+    db.country.delete_one({'name' : country_name})
+    return jsonify({"status":"success"})  
 
 # 404 error handler
 @app.errorhandler(404) 

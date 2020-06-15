@@ -70,7 +70,36 @@ function App() {
             });
     }
 
+    function editCountry(year) {
+        setSelectedYear(year);
+        setSelectedIndustryGdp(countryData["industry_percent_of_gdp"][year] || "");
+        setSelectedAgricultureGdp(countryData["agriculture_percent_of_gdp"][year] || "");
+        setSelectedServicesGdp(countryData["services_percent_of_gdp"][year] || "");
+        setError(false)
+        handleShow();
+    }
 
+    function submitFormHandler() {
+        if (validate(selectedIndustryGdp) || validate(selectedAgricultureGdp) || validate(selectedServicesGdp)) {
+            setError(true)
+        } else {
+            let data = { 'country': selectedCountry, 'year': selectedYear, 'industry': selectedIndustryGdp, 'agriculture': selectedAgricultureGdp, 'services': selectedServicesGdp }
+            fetch(`/data/update/`, {
+                headers: { 'Content-Type': 'application/json' },
+                method: 'POST',
+                body: JSON.stringify(data),
+            })
+                .then(response => response.json())
+                .then(data => {
+                    fetchCountryData(selectedCountry);
+                    handleClose();
+                });
+        }
+    }
+
+    function validate(gdpValue) {
+        return isNaN(gdpValue) || gdpValue > 100
+    }
     return (
         <Fragment>
             <div className="App">
@@ -82,6 +111,7 @@ function App() {
                                 <option key={country} value={country}>{country}</option>))}
                         </select>
                     </div>
+                    {errorMessage ? <p className={"text-danger"}>{errorMessage}</p> : null}
 
                     <table className="table table-striped col-md-10">
                         <thead>
@@ -90,6 +120,7 @@ function App() {
                                 <th>Industry Gdp</th>
                                 <th>Agriculture Gdp</th>
                                 <th>Services Gdp</th>
+                                <th>Edit</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -100,6 +131,7 @@ function App() {
                                         <td>{"industry_percent_of_gdp" in countryData ? countryData["industry_percent_of_gdp"][key] || "N/A" : "N/A"}</td>
                                         <td>{"agriculture_percent_of_gdp" in countryData ? countryData["agriculture_percent_of_gdp"][key] || "N/A" : "N/A"}</td>
                                         <td>{"services_percent_of_gdp" in countryData ? countryData["services_percent_of_gdp"][key] || "N/A" : "N/A"}</td>
+                                        <td><input type="button" className="btn  btn-warning" value="Edit" onClick={() => { editCountry(key) }} /></td>
                                     </tr>
                                 )) : null}
                         </tbody>
@@ -107,6 +139,58 @@ function App() {
 
                 </header>
             </div>
+            {selectedYear ? (
+                <Modal show={show} onHide={handleClose}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Update Country Details</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <form>
+                            <div className="form-group row">
+                                <label htmlFor="countryName" className="col-sm-4 col-form-label">Country Name</label>
+                                <div className="col-sm-8">
+                                    <input type="text" readOnly className="form-control-plaintext" name="country" id="countryName" value={selectedCountry} />
+                                </div>
+                            </div>
+                            <div className="form-group row">
+                                <label htmlFor="countryYear" className="col-sm-4 col-form-label">Year</label>
+                                <div className="col-sm-8">
+                                    <input type="text" readOnly className="form-control-plaintext" name="country" id="countryYear" value={selectedYear} />
+                                </div>
+                            </div>
+                            <div className="form-group row">
+                                <label htmlFor="industry" className="col-sm-4 col-form-label">Industry gdp</label>
+                                <div className="col-sm-8">
+                                    <input type="text" className="form-control" id="industry" name="industryGdp" onChange={(e) => { setSelectedIndustryGdp(e.target.value) }} value={selectedIndustryGdp} />
+                                </div>
+                            </div>
+                            <div className="form-group row">
+                                <label htmlFor="agriculture" className="col-sm-4 col-form-label">Agriculture gdp</label>
+                                <div className="col-sm-8">
+                                    <input type="text" className="form-control" id="agriculture" name="agricultureGdp" onChange={(e) => setSelectedAgricultureGdp(e.target.value)} value={selectedAgricultureGdp} />
+                                </div>
+                            </div>
+                            <div className="form-group row">
+                                <label htmlFor="services" className="col-sm-4 col-form-label">Services gdp</label>
+                                <div className="col-sm-8">
+                                    <input type="text" className="form-control" id="services" name="servicesGdp" onChange={(e) => setSelectedServicesGdp(e.target.value)} value={selectedServicesGdp} />
+                                </div>
+                            </div>
+                            {showError ? (<div className="form-group row">
+                                <label className="col-sm-12 col-form-label text-danger">Error: Value should be a number and maximum is 100</label>
+                            </div>) : null}
+                        </form>
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="secondary" onClick={handleClose}>
+                            Close
+                        </Button>
+                        <Button variant="primary" onClick={submitFormHandler}>
+                            Save Changes
+                        </Button>
+                    </Modal.Footer>
+                </Modal>) : null}
+
         </Fragment>
     )
 }

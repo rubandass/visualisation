@@ -80,7 +80,17 @@ def inspiration():
 def country_data():
     countries_list = db.country.distinct('name')
     countries_list.sort()
-    return render_template("data.html", title = "Visualisation", page = "data", countries_data = countries_list)    
+    return render_template("data.html", title = "Visualisation", page = "data", countries_data = countries_list) 
+
+# 404 error handler
+@app.errorhandler(404) 
+def page_not_found_404(e):
+  return render_template('404.html', title = "Error", error = e), 404
+  
+# 500 error handler
+@app.errorhandler(500) 
+def page_not_found_500(e):
+  return render_template('500.html', title = "Error", error = e), 500         
 
 if __name__ =="__main__":
     app.run(debug=True, port=8080, host='0.0.0.0')

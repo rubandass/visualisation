@@ -97,6 +97,31 @@ function App() {
         }
     }
 
+    function deleteCountryHandler() {
+        handleShowDelete()
+    }
+
+    function submitDeleteFormHandler() {
+        let data = { 'country': selectedCountry }
+        fetch('/data', {
+            headers: { 'Content-Type': 'application/json' },
+            method: 'DELETE',
+            body: JSON.stringify(data),
+        })
+            .then(response => response.json())
+            .then(data => {
+                localStorage.removeItem('countries')
+                fetch("/countries")
+                    .then(response => response.json())
+                    .then(data => {
+                        setApiResponse(data.countries);
+                        setSelectedCountry("");
+                        setCountryData([]);
+                        handleCloseDelete();
+                    });
+            });
+    }
+
     function validate(gdpValue) {
         return isNaN(gdpValue) || gdpValue > 100
     }
@@ -110,6 +135,8 @@ function App() {
                             {apiResponse.map(country => (
                                 <option key={country} value={country}>{country}</option>))}
                         </select>
+
+                        <input type="button" className="ml-5 btn btn-danger" value="Delete" onClick={deleteCountryHandler} disabled={!selectedCountry}/>
                     </div>
                     {errorMessage ? <p className={"text-danger"}>{errorMessage}</p> : null}
 
@@ -184,13 +211,31 @@ function App() {
                     <Modal.Footer>
                         <Button variant="secondary" onClick={handleClose}>
                             Close
-                        </Button>
+            </Button>
                         <Button variant="primary" onClick={submitFormHandler}>
                             Save Changes
-                        </Button>
+            </Button>
                     </Modal.Footer>
                 </Modal>) : null}
 
+            <Modal show={showDelete} onHide={handleCloseDelete}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Delete Country</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <form>
+                        <span>Are you sure you want to delete the country <b>{selectedCountry}?</b></span>
+                    </form>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleCloseDelete}>
+                        No
+                    </Button>
+                    <Button variant="primary" onClick={submitDeleteFormHandler}>
+                        Yes
+                    </Button>
+                </Modal.Footer>
+            </Modal>
         </Fragment>
     )
 }

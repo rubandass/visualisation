@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}{{title}}{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="jumbotron">
+        <h2 class="text-center">404 Error</h1>
+            <h3 class="text-center">{{error}}</h1>
+                <hr>
+                <a class="text-center" href="/">
+                    <button class="text-center btn btn-info">Home</button>
+                </a>
+    </div>
+</div>
+
+{% endblock %}

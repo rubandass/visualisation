@@ -54,11 +54,17 @@ $(document).ready(function () {
                             }
                         };
                     } else {
+                        // If any one of the country data have value then we should pass zero for the not existing values.
+                        // Otherwise pass "N/A"
+                        let baseValue = "N/A";
+                        if (industry_gdp[slider_year] || agriculture_gdp[slider_year] || services_gdp[slider_year]) {
+                            baseValue = 0
+                        }
                         gdp_models.push({
                             "year": slider_year,
-                            "field1": parseFloat(industry_gdp[slider_year] || "N/A"),
-                            "field2": parseFloat(agriculture_gdp[slider_year] || "N/A"),
-                            "field3": parseFloat(services_gdp[slider_year] || "N/A")
+                            "field1": parseFloat(industry_gdp[slider_year] || baseValue),
+                            "field2": parseFloat(agriculture_gdp[slider_year] || baseValue),
+                            "field3": parseFloat(services_gdp[slider_year] || baseValue)
                         });
                     }
 
@@ -97,8 +103,10 @@ $(document).ready(function () {
                     // Scale the range of the data
                     xScale0.domain(gdp_models.map(d => d.year));
                     xScale1.domain(['field1', 'field2', 'field3']).range([0, xScale0.bandwidth()]);
-                    yScale.domain([0, d3.max(gdp_models, d => d.field1 > d.field2 && d.field1 > d.field3 ? d.field1 : d.field2 > d.field1 && d.field2 > d.field3 ? d.field2 : d.field3)]);
 
+                    yScale.domain([0, d3.max(gdp_models, d => d.field1 > d.field2 && d.field1 > d.field3 ? d.field1 : d.field2 > d.field1 && d.field2 > d.field3 ? d.field2 : d.field3)]);
+                    // keys=['field1', 'field2', 'field3']
+                    // yScale.domain([0, d3.max(gdp_models, function(d) { return d3.max(keys, function(key) { return d[key]; }); })]).nice();
                     // add the Y gridlines
                     svg.append("g")
                         .attr("class", "grid")
@@ -240,7 +248,7 @@ $(document).ready(function () {
                     legend.attr("transform", function (d, i) { return "translate(" + i * (width / 4) + ", -20)"; });
 
 
-                } else{
+                } else {
                     alert(response.error_message)
                 }
             })

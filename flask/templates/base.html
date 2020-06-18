@@ -7,38 +7,49 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>{{title}}</title>
     <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/mystyle.css') }}">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"> -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
     <script src="https://d3js.org/d3.v5.min.js"></script>
 </head>
 
-<body>
-    <nav class="navbar navbar-default justify-content-between">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <img src="{{ url_for('static', filename='img/project1_data_visualisation_logo.jpg') }}" alt="..."
-                    style="width: 10rem; height:5rem; padding-right: 6px;">
-            </div>
-            <ul class="nav navbar-nav">
-                <li {% if page == 'home' %}class="current" {% endif %}><a class="txtcolor" href="/">Home</a></li>
-                <li {% if page == 'inspiration' %}class="current" {% endif %}><a class="txtcolor"
-                        href="inspiration">Inspiration</a></li>
-                <li {% if page == 'data' %}class="current" {% endif %}><a class="txtcolor" href="data">Visualisation</a>
+<body class="bg font">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark capitalise">
+        <a class="navbar-brand" href="#"><img
+                src="{{ url_for('static', filename='img/project1_data_visualisation_logo.jpg') }}" alt="..."
+                style="width: 120px; height:40px;"></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
+            aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item {% if page == 'home' %} active {% endif %}">
+                    <a class="nav-link" href="/">Home<span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item {% if page == 'data' %} active {% endif %}">
+                    <a class="nav-link" href="data">Visualisation</a>
+                </li>
+                <li class="nav-item {% if page == 'inspiration' %} active {% endif %}">
+                    <a class="nav-link" href="inspiration">Inspiration</a>
+                </li>
+                <li class="nav-item {% if page == 'documentation' %} active {% endif %}">
+                    <a class="nav-link" href="documentation">Documentation</a>
                 </li>
             </ul>
-            <ul class="nav navbar-nav navbar-right">
-                <li><a href="/readcountries" style="cursor: pointer;">Reset data</a></li>
-            </ul>
-
+            <a href="/readcountries"><button class="btn btn-outline-danger my-2 my-sm-0">Reset</button></a>
         </div>
     </nav>
+    <div class="mt-3"></div>
     {% block content %}
-    <div class="container background-img">
-        <h3>Data Visualisation</h3>
-        <p>It's about data visualisation of different types of data set</p>
-    </div>
+
+    
     {% endblock %}
+    </div>
 
 </body>
 

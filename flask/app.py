@@ -58,11 +58,15 @@ def read_country():
 
 @app.route('/')
 def index():
-    return render_template("base.html", title = "Home", page="home")
+    return render_template("index.html", title = "Home", page="home")
 
 @app.route('/inspiration')
 def inspiration():
     return render_template("inspiration.html", title = "Inspirations", page="inspiration")
+
+@app.route('/documentation')
+def documentation():
+    return render_template("documentation.html", title = "Documentation", page="documentation")    
 
 @app.route("/data")    
 def country_data():
@@ -82,9 +86,9 @@ def get_country(country_name=None):
     else:
         try:
             country_data = Country.objects.get(name = country_name)
-            return country_data.to_json()
+            return jsonify({"status" : "success", "country_data" : country_data.data})
         except:
-            return "Country not found"
+            return jsonify({"status" : "fail", "error_message" : "Country details not found."})
 
 # API for edit country
 @app.route('/country/edit', methods=['POST'])
@@ -102,7 +106,6 @@ def edit_country():
 # API for delete country
 @app.route('/country/delete', methods=['DELETE'])
 def delete_country():
-    print("Called from Node")
     data = request.get_json()['data']
     country_name = data['country']
     db.country.delete_one({'name' : country_name})

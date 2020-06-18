@@ -1,0 +1,165 @@
+{% extends "base.html" %}
+{% block title %}{{title}}{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="jumbotron">
+        <h2>Documentation</h2>
+        <div class="card mb-3">
+            <div class="card-body">
+                <p>In the countries GDP dataset, years with their GDP values are given for 3 different components namely
+                <ul>
+                    <li>Agricultural</li>
+                    <li>Industry</li>
+                    <li>Services</li>
+                </ul>
+                </p>
+            </div>
+        </div>
+    </div>
+    <div>
+        <h3>API calls</h3>
+        <p>There are 4 different apis used in this application. Each one is explained below.</p>
+
+        <div class="card mb-3">
+            <div class="card-header bg-info tet-bold text-white">GET request API for getting all countries</div>
+            <div class="card-body">
+                <div>
+
+                    <h5 class="card-title text-info">Request url:</h5>
+                    <p>
+                        <a href="http://10.25.100.120:8080/countries">http://10.25.100.120:8080/countries</a>
+                    </p>
+
+                    <h5 class="card-title text-info">Request type:</h5>
+                    <p>GET</p>
+
+                    <h5 class="card-title text-info">Description:</h5>
+                    <p>Returns list of countries</p>
+                    <h5 class="card-title text-info">Response:</h5>
+                    <pre class="text-danger">
+    {
+        "countries": [
+        "Afghanistan", 
+        "Albania", 
+        "Algeria", 
+        "Andorra", 
+        "Angola", 
+        "Antigua and Barbuda", 
+        "Argentina", 
+        ...
+        "Venezuela", 
+        "Vietnam", 
+        "Yemen", 
+        "Zambia", 
+        "Zimbabwe"
+        ]
+    }
+                    </pre>
+                </div>
+            </div>
+        </div>
+        <div class="card mb-3">
+            <div class="card-header bg-info tet-bold text-white">GET request API for getting the details of a particular country</div>
+            <div class="card-body">
+                <div>
+                    <h5 class="card-title text-info">Request url:</h5>
+                    <p>
+                        <a
+                            href="http://10.25.100.120:8080/countries/Afghanistan">http://10.25.100.120:8080/countries/Afghanistan</a>
+                    </p>
+
+                    <h5 class="card-title text-info">Request type:</h5>
+                    <p>GET</p>
+
+                    <h5 class="card-title text-info">Description:</h5>
+                    <p>Returns details about the given country</p>
+                    <h5 class="card-title text-info">Response:</h5>
+                    <pre class="text-danger">
+    {
+        "country_data":{
+            "services_percent_of_gdp":{
+                "1960":"",
+                "1961":"",
+                ...
+                "2016":"52.8",
+                "2017":"52.7",
+                "2018":""
+            },
+            "industry_percent_of_gdp":{
+                "1960":"",
+                "1961":"",
+                ...
+                "2016":"21.8",
+                "2017":"22.1",
+                "2018":""
+            },
+            "agriculture_percent_of_gdp":{
+                "1960":"",
+                "1961":"",
+                ...
+                "2016":"21.1",
+                "2017":"20.5",
+                "2018":""
+            }
+        }
+    }
+                </pre>
+                </div>
+            </div>
+        </div>
+        <div class="card mb-3">
+            <div class="card-header bg-info tet-bold text-white">UPDATE request API for updating details of a country</div>
+            <div class="card-body">
+                <div>
+                    <h5 class="card-title text-info">Request url:</h5>
+                    <p>
+                        <a href="http://10.25.100.120:8080/country/edit">http://10.25.100.120:8080/country/edit</a>
+                    </p>
+
+                    <h5 class="card-title text-info">Request type:</h5>
+                    <p>POST</p>
+
+                    <h5 class="card-title text-info">Description:</h5>
+                    <p>Updates details for the given country</p>
+                    <h5 class="card-title text-info">Request format:</h5>
+                    <pre class="text-danger">
+    {
+        country: India,
+        year: '1960',
+        industry: '20.8',
+        agriculture: '41.3',
+        services: '38.8'
+    }
+                    </pre>
+                </div>
+            </div>
+        </div>
+        <div class="card mb-3">
+            <div class="card-header bg-info tet-bold text-white">DELETE request API for deleting a country</div>
+            <div class="card-body">
+                <div>
+                    <h5 class="card-title text-info">Request url:</h5>
+                    <p>
+                        <a href="http://10.25.100.120:8080/country/delete">http://10.25.100.120:8080/country/delete</a>
+                    </p>
+
+                    <h5 class="card-title text-info">Request type:</h5>
+                    <p>DELETE</p>
+
+                    <h5 class="card-title text-info">Description:</h5>
+                    <p>Delete the given country</p>
+                    <h5 class="card-title text-info">Request format:</h5>
+                    <pre class="text-danger">
+    {
+        country: India
+    }
+                    </pre>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

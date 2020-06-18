@@ -28,15 +28,11 @@ app.use('/data', dataRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-  // next(createError(404));
   res.status(404);
-
-  // respond with html page
   if (req.accepts('html')) {
     res.render('error_404', { error: 'Unable to find the requested resource!' });
     return;
   }
-  // res.status(404).render('Unable to find the requested resource!');
 });
 
 // error handler

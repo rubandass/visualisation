@@ -2,7 +2,6 @@
 {% block title %}{{title}}{% endblock %}
 
 {% block content %}
-
 <div class="container">
     <form>
         <div class="form-group row">
@@ -17,15 +16,15 @@
         </div>
     </form>
 
-    <div id="svgcontainer" style="width: 90%; height: 50%;">
+    <div id="svgcontainer">
         <svg>
 
         </svg>
     </div>
 
-    <div class="col-lg-10 mt-5">
+    <div class="col-lg-10 mt-3">
         <label class='text-left'>Select Year</label>
-        <input class="slider" type="range" min=1960 max=2018 id="year" value=1960>
+        <input class="slider" type="range" style="width:80%" min=1960 max=2018 id="year" value=1960>
         <output name="selected_year" id="selected_year" value="1960">1960</output>
     </div>
 </div>

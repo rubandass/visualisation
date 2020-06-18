@@ -2,59 +2,57 @@
 {% block title %}{{title}}{% endblock %}
 
 {% block content %}
-<div class="container mt-5">
-    <div class="row">
-        <div class="col-md-4 mb-2">
-            <div class="card" style="width: 18rem;">
-                <div class="image">
-                    <img src="{{ url_for('static', filename='img/d3_grouped_bar_chart.png') }}"
-                        class="card-img-top" alt="..." style="width: 18rem;
-                    height:18rem;">
-                </div>
+<section>
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-4 mb-2">
+                <div class="card ">
+                    <div class="image">
+                        <img src="{{ url_for('static', filename='img/d3_grouped_bar_chart.png') }}" class="card-img-top"
+                            alt="...">
+                    </div>
 
-                <div class="card-body">
-                    <h5 class="card-title">Graph example</h5>
-                    <p class="card-text">It's easy to follow and create grouped bar chart.</p>
-                    <a href="https://medium.com/@vaibhavkumar_19430/how-to-create-a-grouped-bar-chart-in-d3-js-232c54f85894" class="btn btn-primary" target="_blank">Click here</a>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-4 mb-2">
-            <div class="card" style="width: 18rem;">
-                <div class="image">
-                    <img src="{{ url_for('static', filename='img/404-Error-Example.gif') }}"
-                        class="card-img-top" alt="..." style="width: 18rem;
-                        height:18rem;">
-                </div>
-
-                <div class="card-body">
-                    <h5 class="card-title">Error page</h5>
-                    <p class="card-text">Some cool error handling templates available</p>
-                    <a href="https://freefrontend.com/html-css-404-page-templates/" class="btn btn-primary" target="_blank">Click here</a>
+                    <div class="card-body">
+                        <h5 class="card-title">Graph example inspiration</h5>
+                        <p class="card-text">It's easy to follow and create grouped bar chart.</p>
+                        <a href="https://medium.com/@vaibhavkumar_19430/how-to-create-a-grouped-bar-chart-in-d3-js-232c54f85894"
+                            class="btn btn-primary" target="_blank">Click here</a>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div class="col-md-4 mb-2">
-            <div class="card" style="width: 18rem;">
-                <div class="image">
-                    <img src="{{ url_for('static', filename='img/background_image.jpg') }}"
-                        class="card-img-top" alt="..." style="width: 18rem;
-                            height:18rem;">
+            <div class="col-md-4 mb-2">
+                <div class="card">
+                    <div class="image">
+                        <img src="{{ url_for('static', filename='img/404-Error-Example.gif') }}" class="card-img-top"
+                            alt="...">
+                    </div>
+
+                    <div class="card-body">
+                        <h5 class="card-title">Error page inspiration</h5>
+                        <p class="card-text">Some cool error handling templates available</p>
+                        <a href="https://freefrontend.com/html-css-404-page-templates/" class="btn btn-primary"
+                            target="_blank">Click here</a>
+                    </div>
                 </div>
+            </div>
 
-                <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of
-                        the
-                        card's
-                        content.</p>
-                    <a href="#" class="btn btn-primary">Click here</a>
+            <div class="col-md-4 mb-2">
+                <div class="card">
+                    <div class="image">
+                        <img src="{{ url_for('static', filename='img/vertical-css.png') }}" class="card-img-top"
+                            alt="...">
+                    </div>
+
+                    <div class="card-body">
+                        <h5 class="card-title">Home Vertical alignment</h5>
+                        <p class="card-text">Vertical alignment of elements using css</p>
+                        <a href="https://vanseodesign.com/css/vertical-centering/#:~:text=Vertical%2DAlign,to%20a%20value%20of%20auto." class="btn btn-primary" target="_blank">Click here</a>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+</section>
 
 {% endblock %}

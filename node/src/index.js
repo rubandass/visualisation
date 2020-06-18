@@ -64,9 +64,12 @@ function App() {
 
     function fetchCountryData(country) {
         fetch(`/data?country=${country}`)
-            .then(response => response.json())
+            .then(response => {
+                if (!response.ok) throw new Error(response.status);
+                else return response.json();
+            })
             .then(responseData => {
-                setCountryData(responseData.data)
+                setCountryData(responseData.country_data)
             });
     }
 
@@ -89,7 +92,10 @@ function App() {
                 method: 'POST',
                 body: JSON.stringify(data),
             })
-                .then(response => response.json())
+                .then(response => {
+                    if (!response.ok) throw new Error(response.status);
+                    else return response.json();
+                })
                 .then(data => {
                     fetchCountryData(selectedCountry);
                     handleClose();
@@ -108,7 +114,10 @@ function App() {
             method: 'DELETE',
             body: JSON.stringify(data),
         })
-            .then(response => response.json())
+        .then(response => {
+            if (!response.ok) throw new Error(response.status);
+            else return response.json();
+        })
             .then(data => {
                 localStorage.removeItem('countries')
                 fetch("/countries")
@@ -129,7 +138,7 @@ function App() {
         <Fragment>
             <div className="App">
                 <header className="App-header">
-                    <div className="form-group row mt-5">
+                    <div className="form-group row">
                         <select onChange={(e) => { handleCountryChange(e) }} value={selectedCountry}>
                             <option key={"select"} value={""}>Select Country</option>
                             {apiResponse.map(country => (
@@ -144,9 +153,9 @@ function App() {
                         <thead>
                             <tr>
                                 <th>Year</th>
-                                <th>Industry Gdp</th>
-                                <th>Agriculture Gdp</th>
-                                <th>Services Gdp</th>
+                                <th>Industry Gdp(%)</th>
+                                <th>Agriculture Gdp(%)</th>
+                                <th>Services Gdp(%)</th>
                                 <th>Edit</th>
                             </tr>
                         </thead>
